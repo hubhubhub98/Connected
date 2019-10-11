@@ -7,6 +7,16 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="56dp">
+
+    </androidx.viewpager.widget.ViewPager>
+
     <eu.long1.spacetablayout.SpaceTabLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,18 +28,12 @@
         app:icon_two="@drawable/ic_chat_black_24dp"
         app:icon_three="@drawable/ic_chat_bubble_outline_black_24dp"
         app:icon_four="@drawable/ic_settings_black_24dp"
+        app:layout_behavior="eu.long1.spacetablayout.SpaceTabLayoutBehavior"
         >
 
     </eu.long1.spacetablayout.SpaceTabLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
 
-    </androidx.viewpager.widget.ViewPager>
 
 
 
