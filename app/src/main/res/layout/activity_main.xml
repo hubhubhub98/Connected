@@ -26,7 +26,7 @@
         app:tab_color="@color/colorPrimary"
         app:icon_one="@drawable/ic_person_black_24dp"
         app:icon_two="@drawable/ic_chat_black_24dp"
-        app:icon_three="@drawable/ic_chat_bubble_outline_black_24dp"
+        app:icon_three="@drawable/ic_place_black_24dp"
         app:icon_four="@drawable/ic_settings_black_24dp"
         app:layout_behavior="eu.long1.spacetablayout.SpaceTabLayoutBehavior"
         >

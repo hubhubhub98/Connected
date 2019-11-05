@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "403637820433",
+    "firebase_url": "https://whoaressu-321ee.firebaseio.com",
+    "project_id": "whoaressu-321ee",
+    "storage_bucket": "whoaressu-321ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403637820433:android:1f0260572115435ee825b0",
+        "android_client_info": {
+          "package_name": "com.changsdev.whoaressu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403637820433-qd3n3noqvnc40qicbkk9psr0snrikgr5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.changsdev.whoaressu",
+            "certificate_hash": "e93e29bc7c4d8db68a619d0bb7cbfdb2ea852f03"
+          }
+        },
+        {
+          "client_id": "403637820433-k21d3fcr9eduiq97ehrr6mr657vh0c02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFpbnljVwYVSA6dftnRmxC5_QfHtE17Aw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403637820433-k21d3fcr9eduiq97ehrr6mr657vh0c02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
