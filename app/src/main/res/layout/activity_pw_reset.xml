@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PwResetActivity"
+    android:orientation="vertical"
+    android:background="@color/colorWhiteBlue">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 재설정"
+        android:textSize="40dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/email_edittext"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:hint="이메일.."
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:background="@drawable/login_edittext_style"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_button_style"
+            android:text="보내기"
+            android:textColor="@color/colorWhite"
+            android:textSize="25dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/email_send_btn"
+            android:layout_gravity="center" />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

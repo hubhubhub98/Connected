@@ -15,12 +15,9 @@ import com.changsdev.whoaressu.R;
  * A simple {@link Fragment} subclass.
  */
 public class OrgListFragment extends Fragment {
-
-
     public OrgListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

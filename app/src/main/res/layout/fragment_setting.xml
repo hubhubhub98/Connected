@@ -4,12 +4,95 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.SettingFragment"
+    android:orientation="vertical"
     android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!--타이틀 명-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="개인설정화면" />
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개인정보설정"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:paddingLeft="20dp"/>
+
+    </LinearLayout>
+
+    <!--타이틀 하단 레이아웃-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="김영경"
+                    android:textSize="50dp"
+                    android:layout_gravity="center"/>
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/pencil"
+                    android:background="@color/colorWhite"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="이메일"
+                android:textSize="20dp"
+                android:background="@color/colorPrimary"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:text="비밀번호"
+                android:textSize="20dp"
+                android:background="@color/colorPrimary"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:text="로그아웃"
+                android:textSize="20dp"
+                android:background="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

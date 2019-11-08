@@ -9,8 +9,15 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="조직목록화면" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="조직 목록"
+        android:textSize="30dp"
+        android:paddingLeft="20dp"
+        android:background="@android:color/white"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        />
 
 </LinearLayout>

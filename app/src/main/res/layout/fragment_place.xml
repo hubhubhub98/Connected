@@ -3,14 +3,242 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragment.PlaceFragment"
     android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="주변목록화면" />
+    <!--타이틀 명-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="조직 목록"
+            android:textSize="30dp"
+            android:paddingLeft="20dp"
+            android:background="@android:color/white"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            />
+    </LinearLayout>
+
+    <!--카테고리 나열-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:layout_marginLeft="0dp"
+        android:orientation="vertical">
+        <!--학교 조직-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/schoolgroup"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:background="@color/colorWhite"
+                android:textColor="#000000"
+                android:text="학교 조직"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <!--맛집-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/food"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textColor="#000000"
+                android:background="@color/colorWhite"
+                android:text="맛집"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <!--의료시설-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/medicalfacility"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textColor="#000000"
+                android:background="@color/colorWhite"
+                android:text="의료시설"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <!--편의점-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/conveniencestore"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textColor="#000000"
+                android:background="@color/colorWhite"
+                android:text="편의점"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <!--은행/ATM/우체국-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.4"
+                android:layout_marginLeft="10dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/backandpost"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textColor="#000000"
+                android:background="@color/colorWhite"
+                android:text="은행/ATM/우체국"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <!--미용실-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/beauty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textColor="#000000"
+                android:background="@color/colorWhite"
+                android:text="미용실"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <!--기타-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/comma"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textColor="#000000"
+                android:background="@color/colorWhite"
+                android:text="기타"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
+
+
+    </LinearLayout>
 
 
 
