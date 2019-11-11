@@ -1,4 +1,4 @@
-package com.changsdev.whoaressu.Adapter;
+package com.changsdev.whoaressuproject.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.changsdev.whoaressu.DTO.ChatInfo;
-import com.changsdev.whoaressu.R;
+import com.changsdev.whoaressuproject.model.ChatInfo;
+import com.changsdev.whoaressuproject.R;
 
 import java.util.ArrayList;
 

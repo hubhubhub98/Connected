@@ -1,17 +1,29 @@
-package com.changsdev.whoaressu;
+package com.changsdev.whoaressuproject;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.changsdev.whoaressuproject.model.UserVO;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button registerBtn;
     private Button loginBtn;
 
+    private FirebaseAuth mAuth;
+    private static final String TAG = "LOGINACTIVITY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+        mAuth = FirebaseAuth.getInstance();
 
         registerBtn = (Button)findViewById(R.id.register_btn);
         loginBtn = (Button)findViewById(R.id.login_btn);
@@ -73,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.pw_reset_btn:
-                        Intent intent = new Intent(LoginActivity.this,PwResetActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, PwResetActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.login_btn:
@@ -95,20 +111,37 @@ public class LoginActivity extends AppCompatActivity {
         String emailText = emailEdittext.getText().toString();
         String pwText = pwEdittext.getText().toString();
         if(emailText == null || emailText.equals("") || emailText.trim().equals("") ||
-            pwText == null || pwText.equals("") || pwText.trim().equals("")){
+            pwText == null || pwText.equals("") || pwText.trim().equals("")) {
             //이메일이나 비번을 입력하지않고 로그인버튼을 눌렀을때
             showToast("이메일과 비밀번호를 입력해주세요.");
-            return ;
+            return;
         }
 
         //로그인 처리
+        mAuth.signInWithEmailAndPassword(emailText, pwText)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            showToast("로그인에 성공하셨습니다.");
+                            convertActivity(MainActivity.class);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            showToast("로그인에 실패했습니다.");
+                        }
+                    }
+                });
     }
 
     private void register(){ //회원가입 처리메서드
         String emailText = emailEdittext.getText().toString();
         String pwText = pwEdittext.getText().toString();
         String pwCheckText = pwCheckEdittext.getText().toString();
-        String nameText = nameEdittext.getText().toString();
+        final String nameText = nameEdittext.getText().toString();
         if(emailText == null || emailText.equals("") || emailText.trim().equals("") ||
                 pwText == null || pwText.equals("") || pwText.trim().equals("") ||
                 pwCheckText == null || pwCheckText.equals("") || pwCheckText.trim().equals("") ||
@@ -123,9 +156,59 @@ public class LoginActivity extends AppCompatActivity {
             return ;
         }
 
+        //회원가입 처리
+        mAuth.createUserWithEmailAndPassword(emailText, pwText)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            UserVO user = new UserVO();
+                            String uid = task.getResult().getUser().getUid();
+                            user.setUid(uid);
+                            user.setUserName(nameText);
+                            FirebaseDatabase.getInstance().getReference().child("users").child(uid)
+                                    .setValue(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Write was successful!
+                                            // ...
+                                            showToast("회원가입성공");
+                                            convertActivity(MainActivity.class);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Write failed
+                                            // ...
+                                            showToast("회원가입실패");
+                                        }
+                                    });
+
+
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            showToast("회원가입에 실패했습니다.");
+                        }
+
+                        // ...
+                    }
+                });
+
 
     }
+
     private void showToast(String msg){ //msg를 화면에 출력한다.
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
+    }
+
+    //화면전환하는 메서드.
+    private void convertActivity(Class c){
+        Intent intent = new Intent(LoginActivity.this,c);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "403637820433",
-    "firebase_url": "https://whoaressu-321ee.firebaseio.com",
-    "project_id": "whoaressu-321ee",
-    "storage_bucket": "whoaressu-321ee.appspot.com"
+    "project_number": "988711309238",
+    "firebase_url": "https://whoaressuproject.firebaseio.com",
+    "project_id": "whoaressuproject",
+    "storage_bucket": "whoaressuproject.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:403637820433:android:1f0260572115435ee825b0",
+        "mobilesdk_app_id": "1:988711309238:android:60434bfcc9092264c67b17",
         "android_client_info": {
-          "package_name": "com.changsdev.whoaressu"
+          "package_name": "com.changsdev.whoaressuproject"
         }
       },
       "oauth_client": [
         {
-          "client_id": "403637820433-qd3n3noqvnc40qicbkk9psr0snrikgr5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.changsdev.whoaressu",
-            "certificate_hash": "e93e29bc7c4d8db68a619d0bb7cbfdb2ea852f03"
-          }
-        },
-        {
-          "client_id": "403637820433-k21d3fcr9eduiq97ehrr6mr657vh0c02.apps.googleusercontent.com",
+          "client_id": "988711309238-j8l4u3t9lprqo06tf0v5iq0cpupk1ql1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFpbnljVwYVSA6dftnRmxC5_QfHtE17Aw"
+          "current_key": "AIzaSyAyUqzoY9L_7LDgRvgfp9EBYm7MnqcdCZw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "403637820433-k21d3fcr9eduiq97ehrr6mr657vh0c02.apps.googleusercontent.com",
+              "client_id": "988711309238-j8l4u3t9lprqo06tf0v5iq0cpupk1ql1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

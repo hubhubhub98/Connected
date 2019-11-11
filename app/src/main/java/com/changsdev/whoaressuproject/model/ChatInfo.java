@@ -1,4 +1,4 @@
-package com.changsdev.whoaressu.DTO;
+package com.changsdev.whoaressuproject.model;
 
 public class ChatInfo { //아이템정보 입력할때 쓰는 클래스임.
     public String teamnm;

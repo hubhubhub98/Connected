@@ -1,4 +1,4 @@
-package com.changsdev.whoaressu;
+package com.changsdev.whoaressuproject;
 
 import org.junit.Test;
 
