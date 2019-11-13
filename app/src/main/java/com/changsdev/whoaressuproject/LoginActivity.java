@@ -1,12 +1,15 @@
 package com.changsdev.whoaressuproject;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button registerBtn;
     private Button loginBtn;
 
+    private CheckBox autoLoginCheckBox;
     private FirebaseAuth mAuth;
     private static final String TAG = "LOGINACTIVITY";
     @Override
@@ -45,7 +49,16 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.hide();
 
+        SharedPreferences sp = getSharedPreferences("login_info", Activity.MODE_PRIVATE); //로그인 정보파일을 연다.
         mAuth = FirebaseAuth.getInstance();
+
+        if(!sp.getBoolean("autoLogin",false)){ //autoLogin이라는 키의 값이 true면 자롱로그인 설정을 이미했다는것
+            //autoLogin값이 false라면 자동로그인 설정을 이전에 하지 않았다는것
+            mAuth.signOut();
+        }
+        if(mAuth.getCurrentUser() != null){ //이미 로그인을 한상태라면
+            convertActivity(MainActivity.class);
+        }
 
         registerBtn = (Button)findViewById(R.id.register_btn);
         loginBtn = (Button)findViewById(R.id.login_btn);
@@ -56,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         pwResetText = (TextView)findViewById(R.id.pw_reset_btn);
         registerBtn.setEnabled(false); //기본적으로 회원가입버튼은 일단 비활성화
         registerBtn.setBackgroundResource(R.drawable.register_button_not_enable_style);
+        autoLoginCheckBox = (CheckBox)findViewById(R.id.auto_login_checkbox);
 
         pwCheckEdittext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        final SharedPreferences sp = getSharedPreferences("login_info", Activity.MODE_PRIVATE); //로그인 정보파일을 연다.
         //로그인 처리
         mAuth.signInWithEmailAndPassword(emailText, pwText)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -127,6 +142,15 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             showToast("로그인에 성공하셨습니다.");
+                            SharedPreferences.Editor editor = sp.edit();
+                            if(autoLoginCheckBox.isChecked()){
+                                //자동로그인 체크박스가 체크되어있으면
+                                editor.putBoolean("autoLogin",true); //자동로그인설정을 했다고 기록한다.
+                            }else{
+                                //자동로그인 체크박스가 체크되어있지않다면
+                                editor.putBoolean("autoLogin",false); //자동로그인설정을 하지 않았다고 기록한다.
+                            }
+                            editor.commit();
                             convertActivity(MainActivity.class);
                         } else {
                             // If sign in fails, display a message to the user.
