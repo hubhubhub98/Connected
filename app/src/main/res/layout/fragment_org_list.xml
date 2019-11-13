@@ -4,20 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.OrgListFragment"
-    android:orientation="vertical"
-    android:gravity="center">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="조직 목록"
-        android:textSize="30dp"
-        android:paddingLeft="20dp"
-        android:background="@android:color/white"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="조직 목록"
+            android:textSize="30dp"
+            android:paddingLeft="20dp"
+            android:background="@android:color/white"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/serchWard"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:hint="ex) 컴퓨터학부"/>
+        <ImageButton
+            android:id="@+id/serchOrgList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:src="@drawable/bamboo"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="9">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
