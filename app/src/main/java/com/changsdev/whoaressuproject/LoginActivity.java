@@ -122,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(){ //로그인 처리 메서드
-        String emailText = emailEdittext.getText().toString();
-        String pwText = pwEdittext.getText().toString();
+        String emailText = emailEdittext.getText().toString().trim();
+        String pwText = pwEdittext.getText().toString().trim();
         if(emailText == null || emailText.equals("") || emailText.trim().equals("") ||
             pwText == null || pwText.equals("") || pwText.trim().equals("")) {
             //이메일이나 비번을 입력하지않고 로그인버튼을 눌렀을때
@@ -162,10 +162,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void register(){ //회원가입 처리메서드
-        String emailText = emailEdittext.getText().toString();
-        String pwText = pwEdittext.getText().toString();
-        String pwCheckText = pwCheckEdittext.getText().toString();
-        final String nameText = nameEdittext.getText().toString();
+        final String emailText = emailEdittext.getText().toString().trim();
+        String pwText = pwEdittext.getText().toString().trim();
+        String pwCheckText = pwCheckEdittext.getText().toString().trim();
+        final String nameText = nameEdittext.getText().toString().trim();
         if(emailText == null || emailText.equals("") || emailText.trim().equals("") ||
                 pwText == null || pwText.equals("") || pwText.trim().equals("") ||
                 pwCheckText == null || pwCheckText.equals("") || pwCheckText.trim().equals("") ||
@@ -190,6 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                             String uid = task.getResult().getUser().getUid();
                             user.setUid(uid);
                             user.setUserName(nameText);
+                            user.setUserEmail(emailText);
                             FirebaseDatabase.getInstance().getReference().child("users").child(uid)
                                     .setValue(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

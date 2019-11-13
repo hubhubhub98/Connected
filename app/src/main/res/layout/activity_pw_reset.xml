@@ -33,8 +33,7 @@
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
             android:hint="이메일.."
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:inputType="text"
             android:background="@drawable/login_edittext_style"/>
 
         <Button
