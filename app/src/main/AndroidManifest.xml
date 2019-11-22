@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.changsdev.whoaressuproject">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -13,14 +14,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBlF9gEs1M6IP55evBW-wxafzjBr7ghMI8"></meta-data>
         <activity android:name=".GoogleMapTestActivity">
+
+        </activity>
+        <activity android:name=".PwResetActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".PwResetActivity" />
-        <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".MainActivity"></activity>
     </application>
