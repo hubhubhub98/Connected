@@ -1,5 +1,6 @@
 package com.changsdev.whoaressuproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,6 +11,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class GoogleMapTestActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -31,7 +36,8 @@ public class GoogleMapTestActivity extends AppCompatActivity implements OnMapRea
         mMap = googleMap;
 
 
-        LatLng SEOUL = new LatLng(37.56, 126.97);
+        //;
+        /*LatLng SEOUL = new LatLng(37.56, 126.97);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(SEOUL);
@@ -40,7 +46,7 @@ public class GoogleMapTestActivity extends AppCompatActivity implements OnMapRea
         mMap.addMarker(markerOptions);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));*/
 
         //마커생성후 추가
     }
