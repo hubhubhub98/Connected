@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.changsdev.whoaressuproject">
+    <!--앱에서 전화 연결을 위한 사용 허가-->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
@@ -18,13 +19,18 @@
         </activity>
         <activity android:name=".PwResetActivity" />
         <activity android:name=".LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <!-- 키보드가 레이아웃에 영향 주지 않기 -->
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
     </application>
 
 </manifest>
