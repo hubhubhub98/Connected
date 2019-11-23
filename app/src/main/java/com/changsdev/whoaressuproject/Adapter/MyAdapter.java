@@ -26,8 +26,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     }
 
     private ArrayList<ChatInfo> chatInfoArrayList;
-    public MyAdapter(ArrayList<ChatInfo> foodInfoArrayList){
-        this.chatInfoArrayList = foodInfoArrayList;
+    public MyAdapter(ArrayList<ChatInfo> chatInfoArrayList){
+        this.chatInfoArrayList = chatInfoArrayList;
     }
 
     @Override // oncreateViewHolder는 아이템레이아웃을 뷰홀더에 고정시키는 역할을 함.
@@ -42,8 +42,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        myViewHolder.teamname.setText(chatInfoArrayList.get(position).teamnm);
-        myViewHolder.chatcontent.setText(chatInfoArrayList.get(position).chatctt);
+        myViewHolder.teamname.setText(chatInfoArrayList.get(position).sender);
+        myViewHolder.chatcontent.setText(chatInfoArrayList.get(position).text);
     }
 
     @Override // 사이즈 확인

@@ -2,6 +2,7 @@ package com.changsdev.whoaressuproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.media.session.PlaybackStateCompat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -9,11 +10,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.changsdev.whoaressuproject.function.Makechatroom;
+import com.changsdev.whoaressuproject.function.Sendmessage;
 import com.changsdev.whoaressuproject.fragment.ChatListFragment;
 import com.changsdev.whoaressuproject.fragment.OrgListFragment;
 import com.changsdev.whoaressuproject.fragment.PlaceFragment;
 import com.changsdev.whoaressuproject.fragment.SettingFragment;
+import com.changsdev.whoaressuproject.model.UserVO;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -50,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         spaceTabLayout.initialize(viewPager,getSupportFragmentManager(),fragments,savedInstanceState);
+
+        FirebaseDatabase.getInstance().getReference().child("users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserVO user=dataSnapshot.getValue(UserVO.class);
+                new Sendmessage(user.getUserName(),"IcnUXtGEfFdefWvZepalny04Nd52","하이루","-LuIzNbWL7VMTtqXmfxy");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
