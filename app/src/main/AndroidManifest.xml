@@ -20,7 +20,6 @@
         <activity android:name=".GoogleMapTestActivity"></activity>
         <activity android:name=".PwResetActivity" />
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +29,10 @@
         <!-- 키보드가 레이아웃에 영향 주지 않기 -->
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
-	</activity>
+	    </activity>
+        <activity android:name=".ManagerRegisterActivity">
+
+        </activity>
     </application>
 
 </manifest>

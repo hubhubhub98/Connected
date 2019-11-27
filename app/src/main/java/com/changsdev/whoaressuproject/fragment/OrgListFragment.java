@@ -4,6 +4,8 @@ package com.changsdev.whoaressuproject.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ public class OrgListFragment extends Fragment {
     public OrgListFragment() {
         // Required empty public constructor
     }
-
+    EditText SearchWard;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,19 +61,26 @@ public class OrgListFragment extends Fragment {
 //            }
 //        });
 
+        SearchWard = view.findViewById(R.id.serchWard);
 
         // 그리드 리사이클러뷰
-        ArrayList<TeamInfo> orgItemList = new ArrayList<TeamInfo>(){{
-           add(new TeamInfo("장학팀"));
+       /* ArrayList<TeamInfo> orgItemList = new ArrayList<TeamInfo>(){{
+            add(new TeamInfo("장학팀"));
             add(new TeamInfo("교무팀"));
             add(new TeamInfo("학사팀"));
             add(new TeamInfo("학생서비스팀"));
-        }};
+            add(new TeamInfo("컴퓨터학부"));
+            add(new TeamInfo("전자정보공학부"));
+            add(new TeamInfo("스포츠학부"));
+            add(new TeamInfo("철학과"));
+            add(new TeamInfo("글로벌미디어학부"));
+            add(new TeamInfo("스마트시스템소프트웨어학부"));
+        }};*/
 
         int numberofColumns = 2;
         RecyclerView mRecyclerView = view.findViewById(R.id.recycler);
         RecyclerView.LayoutManager mGridLayoutManager;
-        OrgAdapter myAdapter = new OrgAdapter(getActivity(),orgItemList);
+        OrgAdapter myAdapter = new OrgAdapter(getActivity(),SearchWard);
 
         mRecyclerView.setHasFixedSize(true);
         mGridLayoutManager = new GridLayoutManager(getActivity(),numberofColumns);
