@@ -7,6 +7,8 @@ public class UserVO {
     private String userEmail;
     private boolean isOrg; // 유저가 조직인지 아닌지 확인
 
+
+
     public UserVO(){
 
     }

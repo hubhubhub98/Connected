@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+
     private EditText emailEdittext;
     private EditText pwEdittext;
     private EditText pwCheckEdittext;
@@ -107,10 +109,14 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.login_btn:
+                        loginBtn.setEnabled(false);
                         login();
+                        loginBtn.setEnabled(true);
                         break;
                     case R.id.register_btn:
+                        registerBtn.setEnabled(false);
                         register();
+                        registerBtn.setEnabled(true);
                         break;
                 }
             }
@@ -186,20 +192,39 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserVO user = new UserVO();
-                            String uid = task.getResult().getUser().getUid();
+
+                            final UserVO user = new UserVO();
+                            final String uid = task.getResult().getUser().getUid();
                             user.setUid(uid);
                             user.setUserName(nameText);
                             user.setUserEmail(emailText);
-                            FirebaseDatabase.getInstance().getReference().child("users").child(uid)
-                                    .setValue(user)
+                            UserVO friend = new UserVO();
+                            FirebaseDatabase.getInstance().getReference().child("friends").child(uid)
+                                    .setValue(friend)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             // Write was successful!
                                             // ...
-                                            showToast("회원가입성공");
-                                            convertActivity(MainActivity.class);
+                                            FirebaseDatabase.getInstance().getReference().child("users").child(uid)
+                                                    .setValue(user)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            // Write was successful!
+                                                            // ...
+                                                            showToast("회원가입에 성공했습니다.");
+                                                            convertActivity(MainActivity.class);
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // Write failed
+                                                            // ...
+                                                            showToast("회원가입에 실패했습니다.");
+                                                        }
+                                                    });
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -207,11 +232,9 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             // Write failed
                                             // ...
-                                            showToast("회원가입실패");
+                                            showToast("회원가입에 실패했습니다.");
                                         }
                                     });
-
-
 
                         } else {
                             // If sign in fails, display a message to the user.

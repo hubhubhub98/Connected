@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlaceWriteActivity"
-    android:orientation="vertical"
-    android:id="@+id/mainLayout">
+    tools:context=".PlaceViewActivity"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,7 +34,8 @@
                 android:orientation="vertical"
                 android:layout_marginTop="40dp"
                 android:paddingLeft="30dp"
-                android:paddingRight="30dp">
+                android:paddingRight="30dp"
+                android:layout_marginBottom="50dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -55,6 +55,8 @@
                         android:id="@+id/placename_edittext"
                         android:inputType="text"
                         android:textSize="20dp"
+                        android:textColor="@color/colorBlack"
+                        android:enabled="false"
                         />
 
                 </LinearLayout>
@@ -73,26 +75,7 @@
                     android:orientation="vertical"
                     android:id="@+id/google_map"
                     android:visibility="gone">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
 
-                        <EditText
-                            android:id="@+id/place_search_editText"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:hint="장소를 검색하세요.." />
-
-                        <Button
-                            android:id="@+id/place_search_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Search" />
-
-                    </LinearLayout>
                     <fragment
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -117,7 +100,9 @@
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/place_lat_edittext"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:textColor="@color/colorBlack"
+                        android:enabled="false"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -130,7 +115,9 @@
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/place_lng_edittext"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:textColor="@color/colorBlack"
+                        android:enabled="false"/>
 
                 </LinearLayout>
 
@@ -152,7 +139,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/place_address_edittext"
-                        android:inputType="text"/>
+                        android:textColor="@color/colorBlack"
+                        android:enabled="false"/>
 
 
 
@@ -171,21 +159,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/place_keyword_edittext"
                     android:inputType="text"
-                    android:hint="ex) 순대국,수육국밥,순대"/>
+                    android:hint="ex) 순대국,수육국밥,순대"
+                    android:textColor="@color/colorBlack"
+                    android:enabled="false"/>
 
 
 
             </LinearLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="등록"
-                android:textSize="23dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="50dp"
-                android:id="@+id/place_write_btn"/>
         </LinearLayout>
     </ScrollView>
 
