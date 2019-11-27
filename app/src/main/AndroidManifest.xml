@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.changsdev.whoaressuproject">
-
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--앱에서 전화 연결을 위한 사용 허가-->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -30,9 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing" />
+
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
+	    </activity>
     </application>
 
 </manifest>
