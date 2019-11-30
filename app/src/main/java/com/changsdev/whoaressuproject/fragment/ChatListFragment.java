@@ -66,7 +66,8 @@ public class ChatListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot aa : dataSnapshot.getChildren()){
                     Datamodel message = aa.getValue(Datamodel.class);
-                    chatInfoArrayList.add(new ChatInfo(message.oppositeusername,message.message));
+                    String uid = aa.getKey();
+                    chatInfoArrayList.add(new ChatInfo(message.oppositeusername,message.message,uid,message.oppositeusername));
                 }
                 MyAdapter myAdapter = new MyAdapter(chatInfoArrayList);
                 mRecyclerView.setAdapter(myAdapter);

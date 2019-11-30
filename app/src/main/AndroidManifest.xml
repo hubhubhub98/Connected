@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.changsdev.whoaressuproject">
-    <!--앱에서 전화 연결을 위한 사용 허가-->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!-- 앱에서 전화 연결을 위한 사용 허가 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -11,26 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".activity_chatroom"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBlF9gEs1M6IP55evBW-wxafzjBr7ghMI8" />
-        <activity android:name=".PlaceWriteActivity"></activity>
-        <activity android:name=".GoogleMapTestActivity"></activity>
+
+        <activity android:name=".PlaceWriteActivity" />
+        <activity android:name=".GoogleMapTestActivity" />
         <activity android:name=".PwResetActivity" />
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- 키보드가 레이아웃에 영향 주지 않기 -->
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
-	</activity>
+        </activity> <!-- 키보드가 레이아웃에 영향 주지 않기 -->
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
