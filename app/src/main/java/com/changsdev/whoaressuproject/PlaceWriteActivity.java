@@ -4,33 +4,50 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.changsdev.whoaressuproject.fragment.ScrollableMapFragment;
 import com.changsdev.whoaressuproject.model.PlaceVO;
 import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
-public class PlaceWriteActivity extends AppCompatActivity {
+public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final int PICK_FROM_ALBUM = 10; //requestCode
     private ImageView placePhotoImageView;
@@ -44,6 +61,19 @@ public class PlaceWriteActivity extends AppCompatActivity {
 
     private String category;
 
+    private GoogleMap mMap; //구글맵 api사용
+    private FragmentManager fragmentManager;
+    private ScrollableMapFragment mapFragment; //지도를 표시하는 프래그먼트를 참조.
+    private Geocoder geocoder; //주소나 지역, 장소를 지리좌표(위도,경도)로 변환해주는 역할.
+
+    private Button openMapBtn;
+    private Button placeSearchBtn;
+    private EditText placeSearchEdittext;
+
+    private LinearLayout googleMap;
+
+    private LinearLayout mainLayout;
+    private ScrollView scrollView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,17 +86,34 @@ public class PlaceWriteActivity extends AppCompatActivity {
         placeAddressEdittext = (EditText)findViewById(R.id.place_address_edittext);
         placeKeywordEdittext = (EditText)findViewById(R.id.place_keyword_edittext);
         placeWriteBtn = (Button)findViewById(R.id.place_write_btn);
+        openMapBtn = (Button)findViewById(R.id.open_map_btn);
+        placeSearchBtn = (Button)findViewById(R.id.place_search_btn);
+        placeSearchEdittext = (EditText)findViewById(R.id.place_search_editText);
+        googleMap = (LinearLayout)findViewById(R.id.google_map);
+        scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
 
 
         Intent intent = getIntent(); //인텐트를 통해서 장소에대한 카테고리정보를 얻어온다
         ActionBar actionBar = getSupportActionBar();
-
-        /*
-        String category = intent.getStringExtra("category");
-        우선은 테스트를 위해서 category를 무족건 '맛집'으로 설정해놓겠음
-        */
-        category = "맛집";
+        category = intent.getStringExtra("category");
         actionBar.setTitle(category);
+
+        fragmentManager = getSupportFragmentManager();
+        mapFragment = (ScrollableMapFragment) fragmentManager.findFragmentById(R.id.map_fragment);
+        mapFragment.getMapAsync(this);
+
+        mapFragment.setListener(new ScrollableMapFragment.OnTouchListener() {
+            @Override
+            public void onActionDown() {
+                scrollView.requestDisallowInterceptTouchEvent(true); //스크롤뷰에게 이벤트 가로채지말라고 요청
+            }
+
+            @Override
+            public void onActionUp() {
+                scrollView.requestDisallowInterceptTouchEvent(false);
+            }
+        });
 
 
         View.OnClickListener myListener = new View.OnClickListener() {
@@ -84,6 +131,21 @@ public class PlaceWriteActivity extends AppCompatActivity {
                         startActivityForResult(Intent.createChooser(intent,"이미지를 선택하세요"),PICK_FROM_ALBUM);
                         //갤러리에 접근하자.
                         break;
+                    case R.id.open_map_btn:
+                        if(googleMap.getVisibility() == View.GONE){ //안보이는 상태라면
+                            googleMap.setVisibility(View.VISIBLE); //보이게함
+                            final Snackbar snackbar = Snackbar.make(mainLayout,"검색된 장소의 마커를 누르면\n" +
+                                    "정보를 얻을 수 있습니다.",Snackbar.LENGTH_INDEFINITE);
+                            snackbar.setAction("확인", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    snackbar.dismiss();
+                                }
+                            });
+                            snackbar.show();
+                        }else{ //보이는 상태라면
+                            googleMap.setVisibility(View.GONE); //감춤
+                        }
 
                 }
             }
@@ -91,7 +153,7 @@ public class PlaceWriteActivity extends AppCompatActivity {
 
         placePhotoImageView.setOnClickListener(myListener);
         placeWriteBtn.setOnClickListener(myListener);
-
+        openMapBtn.setOnClickListener(myListener);
 
 
 
@@ -161,7 +223,7 @@ public class PlaceWriteActivity extends AppCompatActivity {
                             place.setLat(lat);
                             place.setLng(lng);
                             place.setName(placeName);
-                            place.setRecommend(0);
+                            place.setRecommend(0); place.setPlacePhotoUrl(downloadUri.toString());
                             place.setPid(pid); place.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             FirebaseDatabase.getInstance().getReference().child("places").push().setValue(place);
                             showToast("업로드를 완료했습니다.");
@@ -204,5 +266,106 @@ public class PlaceWriteActivity extends AppCompatActivity {
 
     private void showToast(String msg){ //msg를 화면에 출력한다.
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
+    }
+
+
+    // 장소를 검색하면 그 장소에 마커가 찍히도록 처리하는 역할
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        geocoder = new Geocoder(this, Locale.KOREA);
+
+
+        placeSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                placeSearchBtn.setEnabled(false);
+                String str=placeSearchEdittext.getText().toString();
+                str = "숭실대학교 "+str;
+                List<Address> addressList = null;
+                try {
+                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
+                    addressList = geocoder.getFromLocationName(
+                            str, // 주소
+                            10); // 최대 검색 결과 개수
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(addressList == null || addressList.size() == 0){
+                    placeSearchBtn.setEnabled(true);
+                    showToast("장소를 찾지 못했습니다");
+                    return ;
+                }
+
+                mMap.clear();
+
+                String address = null;
+                String latitude = null;
+                String longitude = null;
+                LatLng location = null;
+                for(int a = addressList.size()-1; a>=0; a--){
+                    String[] splitStr = addressList.get(a).toString().split(",");
+
+                    address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+                    System.out.println(address); //주소
+
+                    latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+                    longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+
+                    location = null;
+                    try{
+                        location = new LatLng(Double.valueOf(latitude),Double.valueOf(longitude));
+                    }catch (Exception e){
+                        placeSearchBtn.setEnabled(true);
+                        showToast("데이터를 받아오지 못했습니다.\n장소명을 정확히 입력해주시기 바랍니다.");
+                        return ;
+                    }
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.title("찾은 결과");
+                    markerOptions.snippet(address); //세부적인 컨텐츠내용
+                    markerOptions.position(location);
+                    mMap.addMarker(markerOptions);
+                    //검색된 장소들을 마커로 표시
+
+
+
+
+                }
+
+                placeLatEdittext.setText(latitude); placeLngEdittext.setText(longitude);
+                placeAddressEdittext.setText(address);
+                placeSearchBtn.setEnabled(true);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+                //검색된 장소중 가장 가까운 장소의
+                // 정보를 가져와서 각각의 Edittext에 넣어줌.
+
+
+            }
+        });
+
+        /*지도에서 숭실대학교가 먼저 보이도록 함. */
+        LatLng soongsil = new LatLng(37.496606, 126.957408 ); //숭실대학교 좌표
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title("숭실대학교");
+        markerOptions.position(soongsil);
+        mMap.addMarker(markerOptions);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        mMap.setOnMarkerClickListener(this);
+
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        LatLng latlng = marker.getPosition();
+        placeLatEdittext.setText(latlng.latitude+""); placeLngEdittext.setText(latlng.longitude+"");
+        placeAddressEdittext.setText(marker.getSnippet());
+        return false;
     }
 }

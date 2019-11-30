@@ -7,6 +7,8 @@ public class UserVO {
     private String userName; //유저의 이름
     private String userPhoneNumber; //유저의 폰번호. 조직만 해당
 
+
+
     public UserVO(){
 
     }

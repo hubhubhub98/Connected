@@ -10,6 +10,7 @@ public class PlaceVO {
     private String keywords; //키워드
     private int recommend; //추천수
     private String uid; //등록한 사용자
+    private String placePhotoUrl; //장소이미지URL
 
     public String getCategory() {
         return category;
@@ -81,5 +82,13 @@ public class PlaceVO {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getPlacePhotoUrl() {
+        return placePhotoUrl;
+    }
+
+    public void setPlacePhotoUrl(String placePhotoUrl) {
+        this.placePhotoUrl = placePhotoUrl;
     }
 }

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragment.PlaceFragment"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorWhite">
 
     <!--타이틀 명-->
     <LinearLayout
@@ -34,14 +35,16 @@
         android:layout_height="0dp"
         android:layout_weight="9"
         android:layout_marginLeft="0dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/categorys_linearlayout">
         <!--학교 조직-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:clickable="true">
+            android:clickable="true"
+            android:id="@+id/university_org_linearlayout">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -56,7 +59,7 @@
                 android:layout_weight="9"
                 android:background="@color/colorWhite"
                 android:textColor="#000000"
-                android:text="학교 조직"
+                android:text="학교조직"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:textSize="20dp"/>
@@ -69,7 +72,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:clickable="true">
+            android:clickable="true"
+            android:id="@+id/restaurant_linearlayout">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -97,7 +101,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:clickable="true">
+            android:clickable="true"
+            android:id="@+id/medical_linearlayout">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -125,7 +130,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:clickable="true">
+            android:clickable="true"
+            android:id="@+id/convenience_linearlayout">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -153,7 +159,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:clickable="true">
+            android:clickable="true"
+            android:id="@+id/bank_atm_post_linearlayout">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -182,7 +189,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:clickable="true">
+            android:clickable="true"
+            android:id="@+id/beauty_shop_linearlayout">
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -232,20 +240,11 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/place_write_btn"
-            android:text="장소추가"
-            android:textSize="23dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="2"/>
-
-
     </LinearLayout>
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
 
 </LinearLayout>
