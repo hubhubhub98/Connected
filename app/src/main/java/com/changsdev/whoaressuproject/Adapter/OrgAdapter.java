@@ -1,6 +1,7 @@
 package com.changsdev.whoaressuproject.Adapter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,9 +10,12 @@ import android.net.Uri;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import com.changsdev.whoaressuproject.R;
+import com.changsdev.whoaressuproject.activity_chatroom;
 import com.changsdev.whoaressuproject.model.TeamInfo;
 import com.changsdev.whoaressuproject.model.UserVO;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +46,7 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
         this.orgItemList = new ArrayList<>();
         this.context = context;
         this.SearchWard = SearchWard;
+//        ShowDialog();
 
         getList("");
         SearchWard.addTextChangedListener(new TextWatcher() {
@@ -62,6 +68,23 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
             }
         });
     }
+
+//    private void ShowDialog() {
+//        final Dialog dialog = new Dialog(context,
+//                android.R.style.Theme_Translucent_NoTitleBar);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_create);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(dialog.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        lp.gravity = Gravity.CENTER;
+//
+//        dialog.getWindow().setAttributes(lp);
+//
+//
+//        dialog.show();
+//    }
 
     public void getList(final String result){
         FirebaseDatabase.getInstance().getReference().child("users").orderByChild("org")
@@ -100,30 +123,37 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
     @Override
     public void onBindViewHolder(SampleOrgViewHolder viewHolder, final int position) {
         viewHolder.orgName.setText(""+orgItemList.get(position).getUserName());
+        viewHolder.callingNum.setText(""+orgItemList.get(position).getUserPhoneNumber());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
 
-                String st[]={"1.채팅하기","2.전화하기"};
+                final Dialog dialog = new Dialog(context,
+                        android.R.style.Theme_Translucent_NoTitleBar);
 
-                Toast.makeText(context,orgItemList.get(position).getUserName()+"",Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View layout = inflater.inflate(R.layout.dialog_create,null);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_create);
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(dialog.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp.gravity = Gravity.CENTER;
+                dialog.getWindow().setAttributes(lp);
 
-                TextView team = layout.findViewById(R.id.team);
-                final TextView callNumber = layout.findViewById(R.id.callNumber);
-                ImageView chatting = (ImageView)layout.findViewById(R.id.chatting);
-                ImageView calling = (ImageView)layout.findViewById(R.id.calling);
+                TextView team = dialog.findViewById(R.id.team);
+                final TextView callNumber = dialog.findViewById(R.id.callNumber);
+                ImageView chatting = (ImageView)dialog.findViewById(R.id.chatting);
+                ImageView calling = (ImageView)dialog.findViewById(R.id.calling);
                 team.setText(orgItemList.get(position).getUserName()+"");
                 callNumber.setText(orgItemList.get(position).getUserPhoneNumber()+"");
 
                 chatting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent=new Intent(view.getContext(), activity_chatroom.class);
+                        context.startActivity(intent);
                     }
                 });
                 calling.setOnClickListener(new View.OnClickListener() {
@@ -135,21 +165,20 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
                         view.getContext().startActivity(intent);
                     }
                 });
-                /*builder.setTitle(orgItemList.get(position).getUserName()+"");
-                builder.setItems(st, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(i==0){
-                            Toast.makeText(context,"채팅하기",Toast.LENGTH_SHORT).show();
-                        }
-                        else if(i==1){
-                            Toast.makeText(context,"전화하기",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
-                builder.setView(layout);
-                AlertDialog dialog = builder.create();
+//                builder.setView(layout);
+//                AlertDialog dialog = builder.create();
                 dialog.show();
+
+//                Toast.makeText(context,orgItemList.get(position).getUserName()+"",Toast.LENGTH_SHORT).show();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+//                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                View layout = inflater.inflate(R.layout.dialog_create,null);
+
+
+
+
+
+
             }
         });
 
