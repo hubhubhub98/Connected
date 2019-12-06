@@ -49,6 +49,7 @@ import java.util.UUID;
 
 public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
+    public static final int INDICATE_MARKER_DIRECTLY = 9; //requestcode.
     private static final int PICK_FROM_ALBUM = 10; //requestCode
     private ImageView placePhotoImageView;
     private Uri imageUri;
@@ -68,12 +69,15 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
 
     private Button openMapBtn;
     private Button placeSearchBtn;
+    private Button indicateMarkerBtn;
     private EditText placeSearchEdittext;
 
     private LinearLayout googleMap;
 
     private LinearLayout mainLayout;
     private ScrollView scrollView;
+
+    private View.OnClickListener myListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +96,7 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
         googleMap = (LinearLayout)findViewById(R.id.google_map);
         scrollView = (ScrollView)findViewById(R.id.scroll_view);
         mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
-
+        indicateMarkerBtn = (Button)findViewById(R.id.indicate_marker_btn);
 
         Intent intent = getIntent(); //인텐트를 통해서 장소에대한 카테고리정보를 얻어온다
         ActionBar actionBar = getSupportActionBar();
@@ -116,11 +120,12 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
         });
 
 
-        View.OnClickListener myListener = new View.OnClickListener() {
+        myListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.place_write_btn:
+                        placeWriteBtn.setEnabled(false);
                         placeWrite();
                         break;
                     case R.id.place_photo_imageview:
@@ -146,6 +151,11 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
                         }else{ //보이는 상태라면
                             googleMap.setVisibility(View.GONE); //감춤
                         }
+                        break;
+                    case R.id.indicate_marker_btn:
+                        Intent intent1 = new Intent(PlaceWriteActivity.this,PlaceIndicateMarkerActivity.class);
+                        startActivityForResult(intent1,INDICATE_MARKER_DIRECTLY);
+                        break;
 
                 }
             }
@@ -154,6 +164,7 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
         placePhotoImageView.setOnClickListener(myListener);
         placeWriteBtn.setOnClickListener(myListener);
         openMapBtn.setOnClickListener(myListener);
+        indicateMarkerBtn.setOnClickListener(myListener);
 
 
 
@@ -175,6 +186,7 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
             placeAddress == null || placeAddress.equals("") ||
             placeKeyword == null || placeKeyword.equals("")){
             showToast("빈 칸 없이 입력해주세요");
+            placeWriteBtn.setEnabled(true);
             return ;
         }
 
@@ -184,6 +196,7 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
             //실수로 바꿔주는 과정에서 예외가 발생할수 있기때문에 예외처리
         }catch (Exception e){
             showToast("위도 경도 정보를 올바르게 입력하세요");
+            placeWriteBtn.setEnabled(true);
             return ;
         }
 
@@ -232,6 +245,7 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
                             // Handle failures
                             // ...
                             showToast("업로드에 실패했습니다.");
+                            placeWriteBtn.setEnabled(true);
                         }
                     }
         });
@@ -260,6 +274,16 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
             }catch(Exception e){
                 e.printStackTrace();
             }
+        }else if(requestCode == INDICATE_MARKER_DIRECTLY && resultCode == RESULT_OK){
+            double lat = data.getDoubleExtra("lat",0);
+            double lng = data.getDoubleExtra("lng",0);
+            String address = data.getStringExtra("address");
+
+            placeLngEdittext.setText(lng+"");
+            placeLatEdittext.setText(lat+"");
+            placeAddressEdittext.setText(address);
+
+            showToast("위치정보를 얻어왔습니다.");
         }
     }
 
@@ -334,6 +358,7 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
 
                 }
 
+                placeSearchBtn.setEnabled(true);
                 placeLatEdittext.setText(latitude); placeLngEdittext.setText(longitude);
                 placeAddressEdittext.setText(address);
                 placeSearchBtn.setEnabled(true);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.changsdev.whoaressuproject">
-    <!--앱에서 전화 연결을 위한 사용 허가-->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!-- 앱에서 전화 연결을 위한 사용 허가 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlaceViewActivity"></activity>
-        <activity android:name=".ManagerRegisterActivity"></activity>
+        <activity android:name=".PlaceIndicateMarkerActivity"></activity>
+        <activity android:name=".PlaceViewActivity" />
+        <activity android:name=".ManagerRegisterActivity" />
         <activity android:name=".PlaceMapViewActivity" />
         <activity android:name=".PlaceListActivity" />
 
@@ -30,10 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
-	    </activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

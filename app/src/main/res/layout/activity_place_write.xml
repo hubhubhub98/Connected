@@ -59,13 +59,23 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:layout_width="70dp"
-                    android:layout_height="35dp"
-                    android:text="지도보기"
-                    android:textSize="11dp"
-                    android:layout_marginTop="7dp"
-                    android:id="@+id/open_map_btn"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp">
+                    <Button
+                        android:layout_width="70dp"
+                        android:layout_height="35dp"
+                        android:text="지도보기"
+                        android:textSize="11dp"
+                        android:id="@+id/open_map_btn"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:text="직접마커찍기"
+                        android:textSize="11dp"
+                        android:id="@+id/indicate_marker_btn"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,6 +93,7 @@
                             android:id="@+id/place_search_editText"
                             android:layout_width="0dp"
                             android:layout_weight="1"
+                            android:inputType="text"
                             android:layout_height="wrap_content"
                             android:hint="장소를 검색하세요.." />
 

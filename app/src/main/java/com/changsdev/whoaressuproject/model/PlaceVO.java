@@ -1,7 +1,7 @@
 package com.changsdev.whoaressuproject.model;
 
 public class PlaceVO {
-    private String pid; //장소 식별자.
+    private String pid; //업로드된 장소이미지 식별자.
     private String category; //장소의 카테고리
     private String name; //장소이름
     private String address; //장소의 주소
@@ -11,6 +11,7 @@ public class PlaceVO {
     private int recommend; //추천수
     private String uid; //등록한 사용자
     private String placePhotoUrl; //장소이미지URL
+    private String id; // 장소식별자
 
     public String getCategory() {
         return category;
@@ -90,5 +91,13 @@ public class PlaceVO {
 
     public void setPlacePhotoUrl(String placePhotoUrl) {
         this.placePhotoUrl = placePhotoUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
