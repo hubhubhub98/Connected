@@ -5,7 +5,9 @@ public class Datamodel {
     public String message;
     public String oppositeUID;
     public String oppositeusername;
+    public String roomuid;
 
     public Datamodel(){}
+    public String getRoomuid(){return roomuid;}
 
 }
