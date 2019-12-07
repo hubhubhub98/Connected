@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.commit();
                             convertActivity(MainActivity.class);
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, display a Message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             showToast("로그인에 실패했습니다.");
                             loginBtn.setEnabled(true);
@@ -241,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                                     });
 
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, display a Message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             showToast("회원가입에 실패했습니다.");
                             registerBtn.setEnabled(true);

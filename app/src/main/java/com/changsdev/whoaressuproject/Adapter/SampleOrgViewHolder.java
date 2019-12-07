@@ -13,14 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.changsdev.whoaressuproject.R;
 import com.changsdev.whoaressuproject.fragment.OrgListFragment;
 
+import org.w3c.dom.Text;
+
 public class SampleOrgViewHolder extends RecyclerView.ViewHolder {
     public TextView orgName;
-    private SparseBooleanArray selectedItems = new SparseBooleanArray(0);
+    public TextView callingNum;
+    private SparseBooleanArray selectedItems = new SparseBooleanArray(1);
 
 
     public SampleOrgViewHolder(View view){
         super(view);
         this.orgName = (TextView)view.findViewById(R.id.org_name);
+        this.callingNum = (TextView)view.findViewById(R.id.org_callNum);
 
 //        // 아이템 클릭 이벤트 처리
 //        view.setOnClickListener(new View.OnClickListener(){
