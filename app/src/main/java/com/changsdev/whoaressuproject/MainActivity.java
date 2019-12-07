@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         spaceTabLayout.initialize(viewPager,getSupportFragmentManager(),fragments,savedInstanceState);
 
-        new Sendmessage("김창호","IcnUXtGEfFdefWvZepalny04Nd52","ㅁ젇랴뭊대랴ㅜㅈ매ㅑ둘매ㅑ줃래ㅑ뭊대ㅑ룸재ㅑ두랴ㅐㅁ주대ㅑ루매ㅑ줄대ㅑ무쟈대ㅜㄹ매ㅑ줃래ㅜㅈ먀ㅐㄷ루먀잳래ㅑㅁ주대ㅑ룾매ㅑ둘매ㅑㅈ두래ㅑ뭊ㄷㄹ","-LuIzNbWL7VMTtqXmfxy");
-
     }
 
 

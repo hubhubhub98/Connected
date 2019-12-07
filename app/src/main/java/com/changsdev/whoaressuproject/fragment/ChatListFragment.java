@@ -59,18 +59,38 @@ public class ChatListFragment extends Fragment {
         DatabaseReference mDatabase;
 
         final ArrayList<ChatInfo> chatInfoArrayList = new ArrayList<>();
+        final ArrayList<String> indexes = new ArrayList<>();
+        final MyAdapter myAdapter = new MyAdapter(chatInfoArrayList);
+        mRecyclerView.setAdapter(myAdapter);
 
         mDatabase=FirebaseDatabase.getInstance().getReference().child("RoomInfo/"+userUID);
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot aa : dataSnapshot.getChildren()){
-                    Datamodel message = aa.getValue(Datamodel.class);
-                    String uid = aa.getKey();
-                    chatInfoArrayList.add(new ChatInfo(message.oppositeusername,message.message,uid,message.oppositeusername));
-                }
-                MyAdapter myAdapter = new MyAdapter(chatInfoArrayList);
-                mRecyclerView.setAdapter(myAdapter);
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Datamodel message = dataSnapshot.getValue(Datamodel.class);
+                String uid = dataSnapshot.getKey();
+                chatInfoArrayList.add(new ChatInfo(message.oppositeusername,message.message,uid,message.oppositeusername));
+                indexes.add(uid);
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Datamodel message = dataSnapshot.getValue(Datamodel.class);
+                String uid = dataSnapshot.getKey();
+                int index = indexes.indexOf(uid);
+                chatInfoArrayList.set(index,new ChatInfo(message.oppositeusername,message.message,uid,message.oppositeusername));
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
