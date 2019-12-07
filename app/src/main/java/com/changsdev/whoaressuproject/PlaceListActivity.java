@@ -117,6 +117,7 @@ public class PlaceListActivity extends AppCompatActivity {
                             placeList.clear();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 PlaceVO place = snapshot.getValue(PlaceVO.class);
+                                place.setId(snapshot.getKey());
                                 if (place.getName().contains(keyword) || place.getAddress().contains(keyword)
                                         || place.getKeywords().contains(keyword)) {
                                     //장소의 이름이나 주소나 키워드에 에딧텍스트에 입력해준 값이 포함되어있다면
@@ -176,6 +177,9 @@ public class PlaceListActivity extends AppCompatActivity {
                     intent.putExtra("placeAddress",placeList.get(position).getAddress());
                     intent.putExtra("placePhotoUrl",placeList.get(position).getPlacePhotoUrl());
                     intent.putExtra("placeKeyword",placeList.get(position).getKeywords());
+                    intent.putExtra("placeUid",placeList.get(position).getUid());
+                    intent.putExtra("placePid",placeList.get(position).getPid());
+                    intent.putExtra("placeId",placeList.get(position).getId());
                     startActivity(intent);
                 }
             });

@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".PlaceIndicateMarkerActivity"></activity>
+
         <activity android:name=".activity_chatroom"></activity>
         <activity android:name=".PlaceViewActivity"></activity>
         <activity android:name=".ManagerRegisterActivity"></activity>
@@ -32,9 +35,10 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
-	    </activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+
     </application>
 
 </manifest>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlaceViewActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/mainLayout">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -53,7 +54,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/placename_edittext"
-                        android:inputType="text"
                         android:textSize="20dp"
                         android:textColor="@color/colorBlack"
                         android:enabled="false"
@@ -61,13 +61,24 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:layout_width="70dp"
-                    android:layout_height="35dp"
-                    android:text="지도보기"
-                    android:textSize="11dp"
-                    android:layout_marginTop="7dp"
-                    android:id="@+id/open_map_btn"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp">
+                    <Button
+                        android:layout_width="70dp"
+                        android:layout_height="35dp"
+                        android:text="지도보기"
+                        android:textSize="11dp"
+                        android:id="@+id/open_map_btn"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:text="직접마커찍기"
+                        android:textSize="11dp"
+                        android:id="@+id/indicate_marker_btn"
+                        android:visibility="gone"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,6 +86,29 @@
                     android:orientation="vertical"
                     android:id="@+id/google_map"
                     android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/google_map_search_layout"
+                        android:visibility="gone"
+                        >
+
+                        <EditText
+                            android:id="@+id/place_search_editText"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            android:hint="장소를 검색하세요.." />
+
+                        <Button
+                            android:id="@+id/place_search_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Search" />
+
+                    </LinearLayout>
 
                     <fragment
                         android:layout_width="match_parent"
@@ -158,13 +192,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/place_keyword_edittext"
-                    android:inputType="text"
                     android:hint="ex) 순대국,수육국밥,순대"
                     android:textColor="@color/colorBlack"
                     android:enabled="false"/>
 
 
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="50dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/update_delete_btn_layout"
+                android:visibility="gone">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수정"
+                    android:textSize="23dp"
+                    android:id="@+id/place_update_btn"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="삭제"
+                    android:textSize="23dp"
+                    android:id="@+id/place_delete_btn"
+                    android:layout_marginLeft="10dp"
+                    />
             </LinearLayout>
 
         </LinearLayout>

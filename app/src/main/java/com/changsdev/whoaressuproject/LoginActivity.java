@@ -111,12 +111,10 @@ public class LoginActivity extends AppCompatActivity {
                     case R.id.login_btn:
                         loginBtn.setEnabled(false);
                         login();
-                        loginBtn.setEnabled(true);
                         break;
                     case R.id.register_btn:
                         registerBtn.setEnabled(false);
                         register();
-                        registerBtn.setEnabled(true);
                         break;
                 }
             }
@@ -134,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
             pwText == null || pwText.equals("") || pwText.trim().equals("")) {
             //이메일이나 비번을 입력하지않고 로그인버튼을 눌렀을때
             showToast("이메일과 비밀번호를 입력해주세요.");
+            loginBtn.setEnabled(true);
             return;
         }
 
@@ -162,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a Message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             showToast("로그인에 실패했습니다.");
+                            loginBtn.setEnabled(true);
                         }
                     }
                 });
@@ -177,12 +177,14 @@ public class LoginActivity extends AppCompatActivity {
                 pwCheckText == null || pwCheckText.equals("") || pwCheckText.trim().equals("") ||
                 nameText == null || nameText.equals("") || nameText.trim().equals("")){
             showToast("전부 입력해주시기 바랍니다.");
+            registerBtn.setEnabled(true);
             return ;
         }
 
         if(!pwText.equals(pwCheckText)){
             // 비밀번호와 비밀번호확인의 값이 다르다면
             showToast("비밀번호와 비밀번호확인이 다릅니다.");
+            registerBtn.setEnabled(true);
             return ;
         }
 
@@ -223,6 +225,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             // Write failed
                                                             // ...
                                                             showToast("회원가입에 실패했습니다.");
+                                                            registerBtn.setEnabled(true);
                                                         }
                                                     });
                                         }
@@ -233,6 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                                             // Write failed
                                             // ...
                                             showToast("회원가입에 실패했습니다.");
+                                            registerBtn.setEnabled(true);
                                         }
                                     });
 
@@ -240,6 +244,7 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a Message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             showToast("회원가입에 실패했습니다.");
+                            registerBtn.setEnabled(true);
                         }
 
                         // ...
