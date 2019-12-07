@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,8 +22,10 @@ public class Sendmessage {
         Map<String,Object> updates = new HashMap<>();
         updates.put("RoomInfo/"+useruid+"/"+roomuid+"/Sender",message.Sender);
         updates.put("RoomInfo/"+useruid+"/"+roomuid+"/message",message.message);
+        updates.put("RoomInfo/"+useruid+"/"+roomuid+"/timestamp", key);
         updates.put("RoomInfo/"+oppositeuid+"/"+roomuid+"/Sender",message.Sender);
         updates.put("RoomInfo/"+oppositeuid+"/"+roomuid+"/message",message.message);
+        updates.put("RoomInfo/"+oppositeuid+"/"+roomuid+"/timestamp",key);
         mDatabase.updateChildren(updates);
     }
 }
