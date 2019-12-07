@@ -42,15 +42,14 @@ public class ChatListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_chat_list, container, false);
         final RecyclerView mRecyclerView = v.findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager mLayoutManager;
-
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
@@ -64,7 +63,7 @@ public class ChatListFragment extends Fragment {
         mRecyclerView.setAdapter(myAdapter);
 
         mDatabase=FirebaseDatabase.getInstance().getReference().child("RoomInfo/"+userUID);
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        mDatabase.orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
@@ -79,7 +78,10 @@ public class ChatListFragment extends Fragment {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
                 String uid = dataSnapshot.getKey();
                 int index = indexes.indexOf(uid);
-                chatInfoArrayList.set(index,new ChatInfo(message.Sender,message.message,uid,message.oppositeusername));
+                chatInfoArrayList.add(indexes.size(),new ChatInfo(message.Sender,message.message,uid,message.oppositeusername));
+                indexes.add(indexes.size(),uid);
+                chatInfoArrayList.remove(index);
+                indexes.remove(index);
                 myAdapter.notifyDataSetChanged();
             }
 
