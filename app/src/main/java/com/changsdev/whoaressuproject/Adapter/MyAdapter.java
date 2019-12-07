@@ -61,7 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        myViewHolder.teamname.setText(chatInfoArrayList.get(position).sender);
+        myViewHolder.teamname.setText(chatInfoArrayList.get(position).oppositename);
         myViewHolder.chatcontent.setText(chatInfoArrayList.get(position).text);
         myViewHolder.roomuid=chatInfoArrayList.get(position).roomuid;
         myViewHolder.oppositename=chatInfoArrayList.get(position).oppositename;

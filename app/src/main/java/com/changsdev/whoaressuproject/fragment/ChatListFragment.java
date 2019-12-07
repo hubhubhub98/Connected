@@ -69,7 +69,7 @@ public class ChatListFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
                 String uid = dataSnapshot.getKey();
-                chatInfoArrayList.add(new ChatInfo(message.oppositeusername,message.message,uid,message.oppositeusername));
+                chatInfoArrayList.add(new ChatInfo(message.Sender,message.message,uid,message.oppositeusername));
                 indexes.add(uid);
                 myAdapter.notifyDataSetChanged();
             }
@@ -79,7 +79,7 @@ public class ChatListFragment extends Fragment {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
                 String uid = dataSnapshot.getKey();
                 int index = indexes.indexOf(uid);
-                chatInfoArrayList.set(index,new ChatInfo(message.oppositeusername,message.message,uid,message.oppositeusername));
+                chatInfoArrayList.set(index,new ChatInfo(message.Sender,message.message,uid,message.oppositeusername));
                 myAdapter.notifyDataSetChanged();
             }
 
