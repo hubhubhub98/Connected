@@ -35,6 +35,9 @@ public class activity_chatroom extends AppCompatActivity {
     TextView name1;
     Button snd_button;
     EditText send_txt;
+    ChildEventListener seenListener;
+    String email;
+    DatabaseReference mDatabase;
 
 
     @Override
@@ -54,6 +57,7 @@ public class activity_chatroom extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 username[0] =dataSnapshot.child("userName").getValue(String.class);
+                email=dataSnapshot.child("userEmail").getValue(String.class);
                 Log.d("ㅇㅇ",username[0]);
             }
             @Override
@@ -71,7 +75,6 @@ public class activity_chatroom extends AppCompatActivity {
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         String userUID = mAuth.getCurrentUser().getUid();
 
-        DatabaseReference mDatabase;
 
         final ArrayList<Message> messages = new ArrayList<>();
 
@@ -108,23 +111,65 @@ public class activity_chatroom extends AppCompatActivity {
             }
         });
 
+        seenListener=mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String key = dataSnapshot.getKey();
+                if(!dataSnapshot.child("readuser").toString().contains(email))
+                {
+                    String readkey= FirebaseDatabase.getInstance().getReference().child("messages/"+roomuid+"/"+key+"/readuser").push().getKey();
+                    FirebaseDatabase.getInstance().getReference().child("messages/"+roomuid+"/"+key+"/readuser/"+readkey+"/email").setValue(email);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         snd_button=findViewById(R.id.send_btn);
         send_txt=findViewById(R.id.send_txt);
         snd_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference().child("RoomInfo/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+roomuid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String oppositeuid =dataSnapshot.child("oppositeUID").getValue(String.class);
-                        new Sendmessage(username[0],oppositeuid,send_txt.getText().toString(),roomuid);
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                if(!send_txt.getText().toString().replace(" ", "").equals("")) {
+                    FirebaseDatabase.getInstance().getReference().child("RoomInfo/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + roomuid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String oppositeuid = dataSnapshot.child("oppositeUID").getValue(String.class);
+                            new Sendmessage(username[0], oppositeuid, send_txt.getText().toString(), roomuid);
+                            send_txt.setText("");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                }
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mDatabase.removeEventListener(seenListener);
     }
 }

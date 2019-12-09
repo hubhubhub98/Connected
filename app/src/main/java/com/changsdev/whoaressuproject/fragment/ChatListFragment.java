@@ -35,6 +35,12 @@ import java.util.HashMap;
  */
 public class ChatListFragment extends Fragment {
 
+    String email;
+    MyAdapter myAdapter;
+    ArrayList<ChatInfo> chatInfoArrayList;
+    RecyclerView mRecyclerView;
+
+
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -46,7 +52,7 @@ public class ChatListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_chat_list, container, false);
-        final RecyclerView mRecyclerView = v.findViewById(R.id.recycler_view);
+        mRecyclerView = v.findViewById(R.id.recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
@@ -54,13 +60,21 @@ public class ChatListFragment extends Fragment {
 
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         String userUID = mAuth.getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().child("users/"+ userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                email=dataSnapshot.child("userEmail").getValue(String.class);
+                myAdapter = new MyAdapter(chatInfoArrayList,email);
+                mRecyclerView.setAdapter(myAdapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         DatabaseReference mDatabase;
-
-        final ArrayList<ChatInfo> chatInfoArrayList = new ArrayList<>();
+        chatInfoArrayList = new ArrayList<>();
         final ArrayList<String> indexes = new ArrayList<>();
-        final MyAdapter myAdapter = new MyAdapter(chatInfoArrayList);
-        mRecyclerView.setAdapter(myAdapter);
 
         mDatabase=FirebaseDatabase.getInstance().getReference().child("RoomInfo/"+userUID);
         mDatabase.orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
