@@ -1,16 +1,12 @@
 package com.changsdev.whoaressuproject.fragment;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -33,22 +29,22 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatListFragment extends Fragment {
+public class ChatListFragment1 extends Fragment {
 
     String email;
     MyAdapter myAdapter;
-    ArrayList<ChatInfo> chatInfoArrayList;
+    ArrayList<ChatInfo> chatInfoArrayList = new ArrayList<>();
     RecyclerView mRecyclerView;
     EditText SearchWard;
+    DatabaseReference mDatabase;
+    ArrayList<String> indexes = new ArrayList<>();
+    String userUID;
 
 
-
-    public ChatListFragment() {
+    public ChatListFragment1() {
         // Required empty public constructor
     }
 
@@ -63,34 +59,57 @@ public class ChatListFragment extends Fragment {
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        SearchWard=v.findViewById(R.id.listsearch);
+        SearchWard = v.findViewById(R.id.listsearch);
 
-        FirebaseAuth mAuth= FirebaseAuth.getInstance();
-        String userUID = mAuth.getCurrentUser().getUid();
-        FirebaseDatabase.getInstance().getReference().child("users/"+ userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        userUID = mAuth.getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().child("users/" + userUID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                email=dataSnapshot.child("userEmail").getValue(String.class);
-                myAdapter = new MyAdapter(chatInfoArrayList,email);
+                email = dataSnapshot.child("userEmail").getValue(String.class);
+                myAdapter = new MyAdapter(chatInfoArrayList, email);
                 mRecyclerView.setAdapter(myAdapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
-        DatabaseReference mDatabase;
-        chatInfoArrayList = new ArrayList<>();
-        final ArrayList<String> indexes = new ArrayList<>();
+        getList("");
+        SearchWard.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        mDatabase=FirebaseDatabase.getInstance().getReference().child("RoomInfo/"+userUID);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String result = s.toString();
+                getList(result);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        return v;
+    }
+
+    public void getList(final String result) {
+        indexes.clear();
+        chatInfoArrayList.clear();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("RoomInfo/" + userUID);
         mDatabase.orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
                 String uid = dataSnapshot.getKey();
-                chatInfoArrayList.add(new ChatInfo(message.Sender,message.message,uid,message.oppositeusername,message.oppositeUID));
-                indexes.add(uid);
+                if(message.oppositeusername.contains(result)) {
+                    chatInfoArrayList.add(new ChatInfo(message.Sender, message.message, uid, message.oppositeusername,message.oppositeUID));
+                    indexes.add(uid);
+                }
                 myAdapter.notifyDataSetChanged();
             }
 
@@ -98,12 +117,14 @@ public class ChatListFragment extends Fragment {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
                 String uid = dataSnapshot.getKey();
-                int index = indexes.indexOf(uid);
-                chatInfoArrayList.add(indexes.size(),new ChatInfo(message.Sender,message.message,uid,message.oppositeusername,message.oppositeUID));
-                indexes.add(indexes.size(),uid);
-                chatInfoArrayList.remove(index);
-                indexes.remove(index);
-                myAdapter.notifyDataSetChanged();
+                if(message.oppositeusername.contains(result)) {
+                    int index = indexes.indexOf(uid);
+                    chatInfoArrayList.add(indexes.size(), new ChatInfo(message.Sender, message.message, uid, message.oppositeusername,message.oppositeUID));
+                    indexes.add(indexes.size(), uid);
+                    chatInfoArrayList.remove(index);
+                    indexes.remove(index);
+                    myAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -112,8 +133,8 @@ public class ChatListFragment extends Fragment {
                 int index = indexes.indexOf(uid);
                 chatInfoArrayList.remove(index);
                 indexes.remove(index);
-                myAdapter.notifyDataSetChanged();
-        }
+                myAdapter.notifyItemRemoved(index);
+            }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -125,6 +146,5 @@ public class ChatListFragment extends Fragment {
 
             }
         });
-        return v;
     }
 }
