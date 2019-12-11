@@ -3,7 +3,7 @@
     android:id="@+id/chat_list"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:layout_margin="15dp"
+    android:layout_margin="20dp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="10dp"
