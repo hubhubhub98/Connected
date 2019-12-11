@@ -1,6 +1,7 @@
 package com.changsdev.whoaressuproject.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.changsdev.whoaressuproject.Adapter.MyAdapter;
 import com.changsdev.whoaressuproject.Adapter.OrgAdapter;
+import com.changsdev.whoaressuproject.MainActivity;
 import com.changsdev.whoaressuproject.R;
 import com.changsdev.whoaressuproject.model.ChatInfo;
 import com.changsdev.whoaressuproject.model.TeamInfo;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrgListFragment extends Fragment {
+public class OrgListFragment extends Fragment implements MainActivity.OnBackPressedListener{
     public OrgListFragment() {
         // Required empty public constructor
     }
@@ -91,4 +93,19 @@ public class OrgListFragment extends Fragment {
         return view;
     }
 
+    ////////// back 버튼 2번 클릭 시 앱 종료 //////////
+    @Override
+    public void onBack() {
+        // 리스너를 설정하기 위해 Activity 를 받아옴
+        MainActivity activity = (MainActivity)getActivity();
+        // 한번 뒤로가기 버튼을 눌렀다면 Listener 를 null 로 해제
+        activity.setOnBackPressedListener(null);
+    }
+
+    // Fragment 호출 시 반드시 호출되는 오버라이드 메소드
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setOnBackPressedListener(this);
+    }
 }

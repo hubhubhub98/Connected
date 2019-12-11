@@ -1,6 +1,7 @@
 package com.changsdev.whoaressuproject.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.changsdev.whoaressuproject.MainActivity;
 import com.changsdev.whoaressuproject.PlaceListActivity;
 import com.changsdev.whoaressuproject.PlaceWriteActivity;
 import com.changsdev.whoaressuproject.R;
@@ -19,7 +21,7 @@ import com.changsdev.whoaressuproject.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlaceFragment extends Fragment {
+public class PlaceFragment extends Fragment implements MainActivity.OnBackPressedListener{
 
     /*LinearLayout universityOrgLayout;
     LinearLayout restaurantLayout;
@@ -57,4 +59,19 @@ public class PlaceFragment extends Fragment {
         return v;
     }
 
+    ////////// back 버튼 2번 클릭 시 앱 종료 //////////
+    @Override
+    public void onBack() {
+        // 리스너를 설정하기 위해 Activity 를 받아옴
+        MainActivity activity = (MainActivity)getActivity();
+        // 한번 뒤로가기 버튼을 눌렀다면 Listener 를 null 로 해제
+        activity.setOnBackPressedListener(null);
+    }
+
+    // Fragment 호출 시 반드시 호출되는 오버라이드 메소드
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setOnBackPressedListener(this);
+    }
 }

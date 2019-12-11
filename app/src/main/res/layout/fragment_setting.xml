@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:text="개인정보설정"
             android:textStyle="bold"
+            android:textColor="@color/colorBlack"
             android:textSize="25dp"
             android:layout_gravity="center"
             android:paddingLeft="20dp"/>
@@ -43,12 +44,25 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center">
                 <TextView
+                    android:id="@+id/name_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="김영경"
-                    android:textSize="50dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30dp"
+                    android:visibility="visible"
+                    android:layout_gravity="center"/>
+                <EditText
+                    android:id="@+id/name_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="김영경"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30dp"
+                    android:visibility="gone"
                     android:layout_gravity="center"/>
                 <ImageButton
+                    android:id="@+id/reset_btn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/pencil"
@@ -65,6 +79,7 @@
             android:layout_weight="3"
             android:orientation="vertical">
             <Button
+                android:id="@+id/email_setting"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginLeft="30dp"
@@ -73,6 +88,7 @@
                 android:textSize="20dp"
                 android:background="@color/colorPrimary"/>
             <Button
+                android:id="@+id/pw_setting"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginLeft="30dp"
@@ -82,6 +98,7 @@
                 android:textSize="20dp"
                 android:background="@color/colorPrimary"/>
             <Button
+                android:id="@+id/logout_button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginLeft="30dp"
@@ -90,7 +107,7 @@
                 android:text="로그아웃"
                 android:textSize="20dp"
                 android:background="@color/colorPrimary"
-                android:id="@+id/logout_button"/>
+                />
 
         </LinearLayout>
 
