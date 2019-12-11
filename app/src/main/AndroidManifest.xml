@@ -6,14 +6,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ssu"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ssu"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity android:name=".PlaceIndicateMarkerActivity"></activity>
-
+        <activity android:name=".model.loading_activity"></activity>
         <activity android:name=".activity_chatroom"></activity>
         <activity android:name=".PlaceViewActivity"></activity>
         <activity android:name=".ManagerRegisterActivity"></activity>
@@ -33,7 +33,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"
