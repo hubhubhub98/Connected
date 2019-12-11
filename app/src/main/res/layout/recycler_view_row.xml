@@ -40,6 +40,26 @@
             android:textSize="15dp"
             android:textColor="#000000"/>
 
+        <TextView
+            android:id="@+id/seencount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:layout_alignParentRight="true"
+            android:text="3"
+            android:layout_marginRight="20dp"
+            android:layout_alignTop="@id/team_name"/>
+
+        <ImageView
+            android:id="@+id/exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_black_24dp"
+            android:layout_below="@id/seencount"
+            android:layout_alignRight="@id/seencount"
+            android:layout_alignTop="@id/chat_content"/>
+
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

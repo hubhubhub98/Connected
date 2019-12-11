@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.changsdev.whoaressuproject.Adapter.MyAdapter;
 import com.changsdev.whoaressuproject.Adapter.OrgAdapter;
@@ -85,9 +86,11 @@ public class OrgListFragment extends Fragment implements MainActivity.OnBackPres
         OrgAdapter myAdapter = new OrgAdapter(getActivity(),SearchWard);
 
         mRecyclerView.setHasFixedSize(true);
-        mGridLayoutManager = new GridLayoutManager(getActivity(),numberofColumns);
-
-
+        StaggeredGridLayoutManager mLayoutManager;
+        mLayoutManager = new StaggeredGridLayoutManager(2, 1);
+        mLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        mLayoutManager.setOrientation(StaggeredGridLayoutManager.VERTICAL);
+        mGridLayoutManager = mLayoutManager;
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setAdapter(myAdapter);
         return view;

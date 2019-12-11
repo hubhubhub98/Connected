@@ -93,7 +93,7 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         orgItemList.clear();
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            UserVO user = snapshot.getValue(UserVO.class);
+                                UserVO user = snapshot.getValue(UserVO.class);
                             if(user.getUserName().contains(result)){
                                 orgItemList.add(user);
                             }
@@ -140,6 +140,7 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
                 lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
                 lp.gravity = Gravity.CENTER;
                 dialog.getWindow().setAttributes(lp);
+                dialog.setCanceledOnTouchOutside(true);
 
                 final TextView team = dialog.findViewById(R.id.team);
                 final TextView callNumber = dialog.findViewById(R.id.callNumber);
@@ -176,8 +177,6 @@ public class OrgAdapter<orgItemList> extends RecyclerView.Adapter<SampleOrgViewH
                                             Chatroom chatroom1 = new Chatroom(userVO.getUid(),username[0], key);
                                             mDatabase.child("RoomInfo/"+userVO.getUid()+"/"+ key).setValue(chatroom);
                                             mDatabase.child("RoomInfo/"+teamuid+"/"+ key).setValue(chatroom1);
-                                            mDatabase.child("friends/"+userVO.getUid()).setValue(teamuid);
-                                            mDatabase.child("friends/"+teamuid).setValue(userVO.getUid());
                                             Intent intent=new Intent(view.getContext(), activity_chatroom.class);
                                             intent.putExtra("roomuid",key);
                                             intent.putExtra("name",orgItemList.get(position).getUserName());
