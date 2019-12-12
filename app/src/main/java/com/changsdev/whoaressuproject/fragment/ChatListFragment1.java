@@ -4,6 +4,7 @@ package com.changsdev.whoaressuproject.fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +36,13 @@ import java.util.ArrayList;
 public class ChatListFragment1 extends Fragment {
 
     String email;
-    MyAdapter myAdapter;
     ArrayList<ChatInfo> chatInfoArrayList = new ArrayList<>();
+    MyAdapter myAdapter=new MyAdapter(chatInfoArrayList,email);
     RecyclerView mRecyclerView;
     EditText SearchWard;
     DatabaseReference mDatabase;
     ArrayList<String> indexes = new ArrayList<>();
+    ChildEventListener listener;
     String userUID;
 
 
@@ -61,7 +63,7 @@ public class ChatListFragment1 extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         SearchWard = v.findViewById(R.id.listsearch);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         userUID = mAuth.getCurrentUser().getUid();
         FirebaseDatabase.getInstance().getReference().child("users/" + userUID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -69,6 +71,24 @@ public class ChatListFragment1 extends Fragment {
                 email = dataSnapshot.child("userEmail").getValue(String.class);
                 myAdapter = new MyAdapter(chatInfoArrayList, email);
                 mRecyclerView.setAdapter(myAdapter);
+                getList("");
+                SearchWard.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                        String result = s.toString();
+                        mDatabase.removeEventListener(listener);
+                        getList(result);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
             }
 
             @Override
@@ -76,32 +96,14 @@ public class ChatListFragment1 extends Fragment {
             }
         });
 
-        getList("");
-        SearchWard.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String result = s.toString();
-                getList(result);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         return v;
     }
 
     public void getList(final String result) {
-        indexes.clear();
         chatInfoArrayList.clear();
+        indexes.clear();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("RoomInfo/" + userUID);
-        mDatabase.orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
+        listener=mDatabase.orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Datamodel message = dataSnapshot.getValue(Datamodel.class);
@@ -133,7 +135,7 @@ public class ChatListFragment1 extends Fragment {
                 int index = indexes.indexOf(uid);
                 chatInfoArrayList.remove(index);
                 indexes.remove(index);
-                myAdapter.notifyItemRemoved(index);
+                myAdapter.notifyDataSetChanged();
             }
 
             @Override
