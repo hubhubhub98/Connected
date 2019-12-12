@@ -8,8 +8,6 @@ import android.view.Window;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.changsdev.whoaressuproject.MainActivity;
 import com.changsdev.whoaressuproject.R;
 
 public class loading_activity extends AppCompatActivity {
