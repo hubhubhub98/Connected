@@ -373,28 +373,14 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
 
         /*지도에서 숭실대학교가 먼저 보이도록 함. */
         LatLng soongsil = new LatLng(37.496606, 126.957408 ); //숭실대학교 좌표
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title("숭실대학교");
+        markerOptions.position(soongsil);
+        mMap.addMarker(markerOptions);
 
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
-        try {
-            List<Address> addressList = null;
-            addressList = geocoder.getFromLocation(
-                    37.496606, 126.957408,10);
-            if(addressList == null || addressList.size() == 0){
-                showToast("장소를 찾지 못했습니다");
-                return ;
-            }
-
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title("숭실대학교");
-            markerOptions.position(soongsil);
-            mMap.addMarker(markerOptions);
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         mMap.setOnMarkerClickListener(this);
 
 
