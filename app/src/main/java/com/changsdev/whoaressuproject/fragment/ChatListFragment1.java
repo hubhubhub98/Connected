@@ -72,6 +72,7 @@ public class ChatListFragment1 extends Fragment {
                 myAdapter = new MyAdapter(chatInfoArrayList, email);
                 mRecyclerView.setAdapter(myAdapter);
                 getList("");
+
                 SearchWard.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

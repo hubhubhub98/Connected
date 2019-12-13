@@ -424,15 +424,32 @@ public class PlaceViewActivity extends AppCompatActivity implements OnMapReadyCa
 
 
         LatLng place = new LatLng(lat,lng ); //장소의 좌표
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.title(placeName); //장소의 이름
-        markerOptions.snippet(placeAddress); //장소의 주소
-        markerOptions.position(place);
-        mMap.addMarker(markerOptions);
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        try {
+            List<Address> addressList = null;
+            addressList = geocoder.getFromLocation(
+                        lat,lng,10);
+            if(addressList == null || addressList.size() == 0){
+                showToast("장소를 찾지 못했습니다");
+                return ;
+            }
+
+            MarkerOptions marker = new MarkerOptions();
+            marker.title(placeName);
+            marker.snippet(placeAddress); //세부적인 컨텐츠내용
+            marker.position(place);
+            mMap.addMarker(marker);
+
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mMap.setOnMarkerClickListener(this);
     }
 
     private void showToast(String msg){ //msg를 화면에 출력한다.

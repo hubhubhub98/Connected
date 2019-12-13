@@ -18,126 +18,132 @@
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorWhite"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <EditText
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/email_edittext"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:textSize="25dp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:hint="이메일.."
-            android:inputType="text"
-            android:background="@drawable/login_edittext_style"/>
-
-        <EditText
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/pw_edittext"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="25dp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:hint="비밀번호.."
-            android:inputType="textPassword"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:background="@drawable/login_edittext_style"/>
-
-        <EditText
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/pwCheck_edittext"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="25dp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:hint="비밀번호확인.."
-            android:inputType="textPassword"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:background="@drawable/login_edittext_style"/>
-
-        <EditText
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/name_edittext"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="25dp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:hint="이름.."
-            android:inputType="text"
-            android:background="@drawable/login_edittext_style"/>
-
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:gravity="center">
-            <CheckBox
-                android:text="자동로그인"
-                android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="50dp">
+
+            <EditText
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/email_edittext"
                 android:layout_gravity="center"
-                android:id="@+id/auto_login_checkbox"
-                />
+                android:layout_marginTop="40dp"
+                android:textSize="25dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:hint="이메일.."
+                android:inputType="text"
+                android:background="@drawable/login_edittext_style"/>
 
-        </LinearLayout>
+            <EditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/pw_edittext"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:hint="비밀번호.."
+                android:inputType="textPassword"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:background="@drawable/login_edittext_style"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="비밀번호 재설정"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:id="@+id/pw_reset_btn"
-            android:textColor="@color/colorBlack"/>
+            <EditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/pwCheck_edittext"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:hint="비밀번호확인.."
+                android:inputType="textPassword"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:background="@drawable/login_edittext_style"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-           >
-            <Button
+            <EditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_edittext"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:hint="이름.."
+                android:inputType="text"
+                android:background="@drawable/login_edittext_style"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/login_button_style"
-                android:text="로그인"
-                android:textColor="@color/colorWhite"
-                android:textSize="25dp"
-                android:id="@+id/login_btn"
-                android:layout_gravity="center" />
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
+                <CheckBox
+                    android:text="자동로그인"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/auto_login_checkbox"
+                    />
 
-            <Button
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/login_button_style"
-                android:text="회원가입"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="25dp"
-                android:id="@+id/register_btn"
-                android:layout_gravity="center" />
+                android:textSize="20dp"
+                android:text="비밀번호 재설정"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:id="@+id/pw_reset_btn"
+                android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                >
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_button_style"
+                    android:text="로그인"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25dp"
+                    android:id="@+id/login_btn"
+                    android:layout_gravity="center" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_button_style"
+                    android:text="회원가입"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25dp"
+                    android:id="@+id/register_btn"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+
+
         </LinearLayout>
+    </ScrollView>
 
-
-
-    </LinearLayout>
 
 
 </LinearLayout>

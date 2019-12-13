@@ -53,8 +53,8 @@ public class PlaceIndicateMarkerActivity extends AppCompatActivity implements On
         mapFragment = (SupportMapFragment)fragmentManager.findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
 
-        final Snackbar snackbar = Snackbar.make(mainLayout,"원하는 위치를 터치하시면 마커를 표시할 수 있고,\n" +
-                "우측상단에 완료버튼을 눌러 정보를 얻을 수 있습니다.",Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(mainLayout,"원하는 위치를 터치하시면 마커를 표시할 수 있습니다."
+                ,Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("확인", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,8 +133,23 @@ public class PlaceIndicateMarkerActivity extends AppCompatActivity implements On
         /*지도에서 숭실대학교가 먼저 보이도록 함. */
         LatLng soongsil = new LatLng(37.496606, 126.957408 ); //숭실대학교 좌표
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        try {
+            List<Address> addressList = null;
+            addressList = geocoder.getFromLocation(
+                    37.496606, 126.957408,10);
+            if(addressList == null || addressList.size() == 0){
+                showToast("장소를 찾지 못했습니다");
+                return ;
+            }
+
+
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showToast(String msg){ //msg를 화면에 출력한다.

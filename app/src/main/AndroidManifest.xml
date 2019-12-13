@@ -3,6 +3,9 @@
     package="com.changsdev.whoaressuproject">
     <!-- 앱에서 전화 연결을 위한 사용 허가 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -22,7 +25,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBlF9gEs1M6IP55evBW-wxafzjBr7ghMI8" />
+            android:value="AIzaSyDtyUxExkybeuzsJrzFRT6rsVDqFsPt7wk" />
 
         <activity android:name=".PlaceWriteActivity" />
         <activity android:name=".GoogleMapTestActivity" />
