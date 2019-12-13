@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.changsdev.whoaressuproject.LoginActivity;
 import com.changsdev.whoaressuproject.MainActivity;
 import com.changsdev.whoaressuproject.PwResetActivity;
 import com.changsdev.whoaressuproject.R;
+import com.changsdev.whoaressuproject.model.UserVO;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +69,22 @@ public class SettingFragment extends Fragment implements MainActivity.OnBackPres
         pwBtn = (Button)v.findViewById(R.id.pw_setting);
         logoutBtn = (Button)v.findViewById(R.id.logout_button);
 
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UserVO userModel = dataSnapshot.getValue(UserVO.class);
+                        nameView.setText(userModel.getUserName());
+                        nameEdit.setText(userModel.getUserName());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
 
 
         View.OnClickListener myListener = new View.OnClickListener() {
@@ -71,19 +96,39 @@ public class SettingFragment extends Fragment implements MainActivity.OnBackPres
                         if(check.equals("Edit")){
                             nameView.setVisibility(View.GONE);
                             nameEdit.setVisibility(View.VISIBLE);
-                            nameEdit.setText(nameView.getText());
+                            nameEdit.setText(nameView.getText().toString());
                             check = "View";
                         }
                         // TextView로 전환
                         else if(check.equals("View")){
-                            nameEdit.setVisibility(View.GONE);
-                            nameView.setVisibility(View.VISIBLE);
-                            nameView.setText(nameEdit.getText());
-                            check = "Edit";
+                            final String inputNameText = nameEdit.getText().toString().trim();
+
+                            FirebaseDatabase.getInstance().getReference().child("users/"+uid+"/userName")
+                            .setValue(inputNameText)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Write was successful!
+                                        nameEdit.setVisibility(View.GONE);
+                                        nameView.setVisibility(View.VISIBLE);
+                                        nameView.setText(inputNameText);
+                                        check = "Edit";
+                                        Toast.makeText(getContext(),"이름 수정에 성공했습니다.",Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Write failed
+                                                // ...
+                                                Toast.makeText(getContext(),"이름 수정에 실패했습니다.",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                         }
                         break;
                     case R.id.email_setting:
-                        Toast.makeText(getContext(),"이메일 출력할 자리",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),FirebaseAuth.getInstance().getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.pw_setting:
                         Intent intent2 = new Intent(getContext(), PwResetActivity.class);

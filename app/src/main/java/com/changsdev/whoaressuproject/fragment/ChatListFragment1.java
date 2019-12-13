@@ -69,6 +69,7 @@ public class ChatListFragment1 extends Fragment {
                 email = dataSnapshot.child("userEmail").getValue(String.class);
                 myAdapter = new MyAdapter(chatInfoArrayList, email);
                 mRecyclerView.setAdapter(myAdapter);
+                getList("");
             }
 
             @Override
@@ -76,7 +77,7 @@ public class ChatListFragment1 extends Fragment {
             }
         });
 
-        getList("");
+
         SearchWard.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
