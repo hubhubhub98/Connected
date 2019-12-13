@@ -28,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -362,8 +363,8 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
                 placeLatEdittext.setText(latitude); placeLngEdittext.setText(longitude);
                 placeAddressEdittext.setText(address);
                 placeSearchBtn.setEnabled(true);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+                CameraPosition.Builder builder = new CameraPosition.Builder();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.target(location).zoom(16.0f).build()));
                 //검색된 장소중 가장 가까운 장소의
                 // 정보를 가져와서 각각의 Edittext에 넣어줌.
 
@@ -373,28 +374,14 @@ public class PlaceWriteActivity extends AppCompatActivity implements OnMapReadyC
 
         /*지도에서 숭실대학교가 먼저 보이도록 함. */
         LatLng soongsil = new LatLng(37.496606, 126.957408 ); //숭실대학교 좌표
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title("숭실대학교");
+        markerOptions.position(soongsil);
+        mMap.addMarker(markerOptions);
 
+        CameraPosition.Builder builder = new CameraPosition.Builder();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.target(soongsil).zoom(16.0f).build()));
 
-        try {
-            List<Address> addressList = null;
-            addressList = geocoder.getFromLocation(
-                    37.496606, 126.957408,10);
-            if(addressList == null || addressList.size() == 0){
-                showToast("장소를 찾지 못했습니다");
-                return ;
-            }
-
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title("숭실대학교");
-            markerOptions.position(soongsil);
-            mMap.addMarker(markerOptions);
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         mMap.setOnMarkerClickListener(this);
 
 
