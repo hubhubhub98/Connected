@@ -31,6 +31,7 @@ import com.changsdev.whoaressuproject.model.PlaceVO;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -410,8 +411,8 @@ public class PlaceViewActivity extends AppCompatActivity implements OnMapReadyCa
                 placeLatEdittext.setText(latitude); placeLngEdittext.setText(longitude);
                 placeAddressEdittext.setText(address);
                 placeSearchBtn.setEnabled(true);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+                CameraPosition.Builder builder = new CameraPosition.Builder();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.target(location).zoom(16.0f).build()));
                 //검색된 장소중 가장 가까운 장소의
                 // 정보를 가져와서 각각의 Edittext에 넣어줌.
 
@@ -431,8 +432,8 @@ public class PlaceViewActivity extends AppCompatActivity implements OnMapReadyCa
         mMap.addMarker(markerOptions);
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        CameraPosition.Builder builder = new CameraPosition.Builder();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.target(place).zoom(16.0f).build()));
         mMap.setOnMarkerClickListener(this);
     }
 

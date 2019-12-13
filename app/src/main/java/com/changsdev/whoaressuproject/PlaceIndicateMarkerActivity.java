@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -132,8 +133,8 @@ public class PlaceIndicateMarkerActivity extends AppCompatActivity implements On
 
         /*지도에서 숭실대학교가 먼저 보이도록 함. */
         LatLng soongsil = new LatLng(37.496606, 126.957408 ); //숭실대학교 좌표
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(soongsil));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        CameraPosition.Builder builder = new CameraPosition.Builder();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.target(soongsil).zoom(16.0f).build()));
 
     }
 

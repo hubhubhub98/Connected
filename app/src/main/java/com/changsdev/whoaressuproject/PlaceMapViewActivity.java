@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -69,7 +70,7 @@ public class PlaceMapViewActivity extends AppCompatActivity implements OnMapRead
         mMap.addMarker(markerOptions);
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        CameraPosition.Builder builder = new CameraPosition.Builder();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.target(place).zoom(16.0f).build()));
     }
 }
